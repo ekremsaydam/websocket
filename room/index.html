@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Websocket - Room </title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script>
+    $(() => {
+      const socket = io.connect('http://localhost:3000/');
+
+      $('#joinRoom').on('click', () => {
+        socket.emit('joinRoom', { name: $('#roomName').val() });
+      });
+
+      socket.on('new join', (data) => {
+        $('#userCount').html(`Şu anda odata <b>${data.count}</b> kişi var`);
+      });
+    });
+  </script>
+
+</head>
+<body>
+  <input type="text" id="roomName">
+  <button id="joinRoom">Join</button>
+  <div id="userCount"></div>
+
+</body>
+</html>
